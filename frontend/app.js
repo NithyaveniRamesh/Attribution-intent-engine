@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://attribution-intent-engine.onrender.com";
 
 let currentResult = null;
 let history = [];
@@ -86,8 +86,6 @@ function displayResult(result) {
   } else {
     reviewBox.classList.add("hidden");
   }
-
-  
 
   /*
    * Automatically show the review queue
