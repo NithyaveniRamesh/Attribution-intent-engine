@@ -18,6 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class ConversationRequest(BaseModel):
     conversation: str
 
