@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentLogic Attribution POC</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>SentLogic Attribution</h1>
+                <p>Confidence-aware customer intent classification</p>
+            </div>
+
+            <div class="prototype-badge">
+                PROTOTYPE
+            </div>
+        </header>
+
+
+        <!-- Main Content -->
+        <main>
+
+            <!-- Conversation Section -->
+            <section class="card">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Customer Conversation</h2>
+                        <p>Analyze an Instagram DM conversation</p>
+                    </div>
+                </div>
+
+                <textarea
+                    id="conversation"
+                    placeholder="Paste customer conversation here...
+
+Example:
+Customer: Is the black hoodie available in M?
+Brand: Yes, M is available.
+Customer: Great, send me the checkout link."
+                ></textarea>
+
+                <button id="analyzeBtn" onclick="analyzeConversation()">
+                    Analyze Conversation
+                </button>
+
+            </section>
+
+
+            <!-- Result Section -->
+            <section id="resultSection" class="card result-card hidden">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Classification Result</h2>
+                        <p>Decision generated from conversation context</p>
+                    </div>
+                </div>
+
+
+                <div class="result-grid">
+
+                    <div class="result-item">
+                        <span class="label">Intent</span>
+                        <strong id="intent">—</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="label">Confidence</span>
+                        <strong id="confidence">—</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="label">Status</span>
+                        <strong id="status">—</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- Confidence Bar -->
+                <div class="confidence-container">
+                    <div class="confidence-header">
+                        <span>Confidence Score</span>
+                        <span id="confidenceText">0%</span>
+                    </div>
+
+                    <div class="confidence-bar">
+                        <div id="confidenceFill"></div>
+                    </div>
+                </div>
+
+
+                <!-- Reason -->
+                <div class="reason-box">
+                    <span class="label">Decision Reason</span>
+                    <p id="reason">—</p>
+                </div>
+
+
+                <!-- Review Alert -->
+                <div id="reviewBox" class="review-box hidden">
+                    <strong>⚠ Human Review Required</strong>
+                    <p>
+                        Confidence is not high enough for an automatic decision.
+                        The conversation has been added to the review workflow.
+                    </p>
+
+                    <button class="review-button" onclick="sendToReview()">
+                        Send to Review
+                    </button>
+                </div>
+
+
+                <!-- Attribution -->
+                <div class="attribution-box">
+                    <span>✓</span>
+                    <div>
+                        <strong>Attribution Pipeline Continues</strong>
+                        <p>
+                            The customer journey is not blocked while the decision
+                            is being reviewed.
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- Review Queue -->
+            <section id="reviewSection" class="card hidden">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Human Review Queue</h2>
+                        <p>Review provisional decisions</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+
+                    <div class="review-header">
+                        <strong>Conversation #1042</strong>
+                        <span class="provisional">PROVISIONAL</span>
+                    </div>
+
+                    <div class="review-details">
+
+                        <div>
+                            <span class="label">Model Decision</span>
+                            <strong id="reviewIntent">CUSTOMER_INQUIRY</strong>
+                        </div>
+
+                        <div>
+                            <span class="label">Confidence</span>
+                            <strong id="reviewConfidence">62%</strong>
+                        </div>
+
+                    </div>
+
+                    <p class="review-question">
+                        What is the correct customer intent?
+                    </p>
+
+                    <div class="review-actions">
+
+                        <button onclick="makeHumanDecision('CUSTOMER_INQUIRY')">
+                            Mark Inquiry
+                        </button>
+
+                        <button onclick="makeHumanDecision('INTENT_TO_BUY')">
+                            Mark Intent to Buy
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Decision History -->
+            <section id="historySection" class="card hidden">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Decision History</h2>
+                        <p>Append-only record of model and human decisions</p>
+                    </div>
+                </div>
+
+                <div id="history"></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
